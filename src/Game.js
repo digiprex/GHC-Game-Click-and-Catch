@@ -28,11 +28,11 @@ Candy.Game.prototype = {
 		// play the animation
 		this._player.animations.play('idle');
 		// set font style
-		this._fontStyle = { font: "40px Arial", fill: "#FFCC00", stroke: "#333", strokeThickness: 5, align: "center" };
+		this._fontStyle = { font: "38px Arial", fill: "#FFCC00", stroke: "#333", strokeThickness: 5, align: "center" };
 		// initialize the spawn timer
 		this._spawnCandyTimer = 0;
 		// initialize the score text with 0
-		Candy._scoreText = this.add.text(120, 20, "0", this._fontStyle);
+		Candy._scoreText = this.add.text(140, 25, "0", this._fontStyle);
 		// set health of the player
 		Candy._health = 10;
 		// create new group for candy
@@ -57,7 +57,7 @@ Candy.Game.prototype = {
 		// update timer every frame
 		this._spawnCandyTimer += this.time.elapsed;
 		// if spawn timer reach one second (1000 miliseconds)
-		if(this._spawnCandyTimer > 1000) {
+		if(this._spawnCandyTimer > 800) {
 			// reset it
 			this._spawnCandyTimer = 0;
 			// and spawn new candy
@@ -74,6 +74,9 @@ Candy.Game.prototype = {
 			this.add.sprite((Candy.GAME_WIDTH-594)/2, (Candy.GAME_HEIGHT-271)/2, 'game-over');
 			// pause the game
 			this.game.paused = true;
+			//Api call to store text
+
+
 		}
 	}
 };
@@ -83,7 +86,7 @@ Candy.item = {
 		// calculate drop position (from 0 to game width) on the x axis
 		var dropPos = Math.floor(Math.random()*Candy.GAME_WIDTH);
 		// define the offset for every candy
-		var dropOffset = [-27,-36,-36,-38,-48];
+		var dropOffset = [-41.5, -41.5, -41.5, -41.5, -41.5];
 		// randomize candy type
 		var candyType = Math.floor(Math.random()*5);
 		// create new candy
