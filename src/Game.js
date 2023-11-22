@@ -14,7 +14,7 @@ Candy.Game.prototype = {
 		// start the physics engine
 		this.physics.startSystem(Phaser.Physics.ARCADE);
 		// set the global gravity
-		this.physics.arcade.gravity.y = 200;
+		this.physics.arcade.gravity.y = 300;
 		// display images: background, floor and score
 		this.add.sprite(0, 0, 'background');
 		this.add.sprite(-30, Candy.GAME_HEIGHT-160, 'floor');
