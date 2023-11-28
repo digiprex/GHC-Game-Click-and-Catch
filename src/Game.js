@@ -3,6 +3,7 @@ Candy.Game = function(game){
 	this._player = null;
 	this._candyGroup = null;
 	this._spawnCandyTimer = 0;
+	this._difficulty = 800;
 	this._fontStyle = null;
 	// define Candy variables to reuse them in Candy.item functions
 	Candy._scoreText = null;
@@ -28,7 +29,7 @@ Candy.Game.prototype = {
 		// play the animation
 		this._player.animations.play('idle');
 		// set font style
-		this._fontStyle = { font: "38px Arial", fill: "#FFCC00", stroke: "#333", strokeThickness: 5, align: "center" };
+		this._fontStyle = { font: "36px Arial", fill: "#FFCC00", stroke: "#333", strokeThickness: 5, align: "center" };
 		// initialize the spawn timer
 		this._spawnCandyTimer = 0;
 		// initialize the score text with 0
@@ -56,8 +57,11 @@ Candy.Game.prototype = {
 	update: function(){
 		// update timer every frame
 		this._spawnCandyTimer += this.time.elapsed;
+
+		//Max Timer Value / Difficulty which should increase for every 20 score points but should'nt exceed 500 (MAX_DIFFICULTY)
+		this._difficulty = Math.max(500, this._difficulty - 10 * Math.floor(Candy._score/20));
 		// if spawn timer reach one second (1000 miliseconds)
-		if(this._spawnCandyTimer > 800) {
+		if(this._spawnCandyTimer > this._difficulty) {
 			// reset it
 			this._spawnCandyTimer = 0;
 			// and spawn new candy
@@ -75,7 +79,7 @@ Candy.Game.prototype = {
 			// pause the game
 			this.game.paused = true;
 			//Api call to store text
-
+			triggerEndGamePopup(Candy._score);
 
 		}
 	}
@@ -85,6 +89,8 @@ Candy.item = {
 	spawnCandy: function(game){
 		// calculate drop position (from 0 to game width) on the x axis
 		var dropPos = Math.floor(Math.random()*Candy.GAME_WIDTH);
+		dropPos = Math.max(30, dropPos);
+		dropPos = Math.min(Candy.GAME_WIDTH - 30, dropPos);
 		// define the offset for every candy
 		var dropOffset = [-41.5, -41.5, -41.5, -41.5, -41.5];
 		// randomize candy type

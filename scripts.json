@@ -1,0 +1,6 @@
+{
+    "scripts": {
+        "serve-mars":  "echo -e 'const BRAND = \"mars\"' > src/config.js && serve",
+        "serve-saturn":  "echo -e 'const BRAND = \"saturn\"' > src/config.js && serve"
+    }
+}

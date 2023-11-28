@@ -4,6 +4,8 @@
 	<meta charset="utf-8" />
 	<title>Monster Wants Candy demo</title>
 	<style> body { margin: 0; background: #B4D9E7; } </style>
+	<script src="src/config.js"></script>
+	<script src="src/rewards.js"></script>
 	<script src="src/phaser-2.0.7.min.js"></script>
 	<script src="src/Boot.js"></script>
 	<script src="src/Preloader.js"></script>
@@ -14,6 +16,7 @@
 <script>
 (function() {
 	// initialize the framework
+	console.log(BRAND);
 	var game = new Phaser.Game(640, 960, Phaser.AUTO, 'game');
 	// add game states
 	game.state.add('Boot', Candy.Boot);
