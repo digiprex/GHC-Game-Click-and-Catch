@@ -29,11 +29,11 @@ Candy.Game.prototype = {
 		// play the animation
 		this._player.animations.play('idle');
 		// set font style
-		this._fontStyle = { font: "36px Arial", fill: "#FFCC00", stroke: "#333", strokeThickness: 5, align: "center" };
+		this._fontStyle = { font: "25px Arial", fill: "#FFCC00", stroke: "#333", strokeThickness: 5, align: "center" };
 		// initialize the spawn timer
 		this._spawnCandyTimer = 0;
 		// initialize the score text with 0
-		Candy._scoreText = this.add.text(140, 25, "0", this._fontStyle);
+		Candy._scoreText = this.add.text(140, 31, "0", this._fontStyle);
 		// set health of the player
 		Candy._health = 10;
 		// create new group for candy
@@ -44,8 +44,9 @@ Candy.Game.prototype = {
 	managePause: function(){
 		// pause the game
 		this.game.paused = true;
+		this._fontStyle1 = { font: "40px Arial", fill: "#FFCC00", stroke: "#333", strokeThickness: 5, align: "center" };
 		// add proper informational text
-		var pausedText = this.add.text(100, 250, "Game paused.\nTap anywhere to continue.", this._fontStyle);
+		var pausedText = this.add.text(100, 250, "Game paused.\nTap anywhere to continue.", this._fontStyle1);
 		// set event listener for the user's click/tap the screen
 		this.input.onDown.add(function(){
 			// remove the pause text
