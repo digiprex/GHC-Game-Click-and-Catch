@@ -62,7 +62,10 @@ function loadSession() {
     console.log("Session Id: ", id);
 }
 
-function triggerEndGamePopup(score) {
+async function triggerEndGamePopup(score) {
+    let actualWidth = window.innerWidth;
+    let resolutionWidth = screen.width;
+    let scaleFactor = actualWidth/resolutionWidth;
     const htmlContent = `
     <style>
     .background {
@@ -81,6 +84,7 @@ function triggerEndGamePopup(score) {
     }
     .popup-container {
         max-width: 340px;
+        animation: zoomDesktop 1s;
     }
     .popup-card {
         background: white;
@@ -102,6 +106,7 @@ function triggerEndGamePopup(score) {
     .form-info {
         font-size: 14px;
         padding: 5px 0px;
+        text-align: center;
     }
     
     .form-body {
@@ -129,20 +134,34 @@ function triggerEndGamePopup(score) {
     }
 
     :disabled {
-        background: gray;
+        background: rgba(0,0,0,0.4);
         cursor: not-allowed !important
+    }
+
+    @keyframes zoom {
+        0% { transform: scale(0) }
+        100% { transform: scale(${scaleFactor}) }
+      }
+
+    @keyframes zoomDesktop {
+        0% { transform: scale(0) }
+        100% { transform: scale(1) }
     }
 
     @media only screen and (max-device-width: 480px){
         .popup-container {
             max-width: 340px;
+            animation: zoom 1s;
+            transform: scale(${scaleFactor})
         }
     }
+    
 </style>
 
 <script>
     
 </script>
+
 <div class = "background">
     <div class = "popup-container">
         <div class = "popup-card">
@@ -172,4 +191,181 @@ function triggerEndGamePopup(score) {
 const parent = document.createElement('div');
 parent.innerHTML = htmlContent;
 document.body.appendChild(parent);
+}
+
+function triggerStartGamePopup() {
+    let actualWidth = window.innerWidth;
+    let resolutionWidth = screen.width;
+    let scaleFactor = actualWidth/resolutionWidth;
+    const htmlContent = `
+    <style>
+    .background {
+        background: rgba(0, 0, 0, 0.15);
+        position: fixed;
+        z-index: 5;
+        min-height: 100vh;
+        min-width: 100vw;
+        top: 0;
+        left: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        
+    }
+    .popup-container {
+        max-width: 340px;
+    }
+
+    .zoomIn {
+        animation: zoomDesktop 1s;
+    }
+
+    .zoomOut {
+        animation: shrinkDesktop 1s;
+        transform: scale(0);
+    }
+    
+    .card {
+        background: #fff;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 12px;
+        border-radius: 8px;
+        
+    }
+    
+    .card-title {
+        text-align: center;
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 600;
+        padding: 0px 15px;
+    }
+    
+    .card-body {
+        margin-top: 35px;
+    }
+    
+    .card-header {
+        text-align: center;
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 400; 
+    }
+    
+    .card-text {
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400; 
+        line-height: 25.81px;
+        padding-right: 30px;
+    }
+    
+    .card-footer {
+        text-align: center;
+        margin: 20px 0px;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 600; 
+    }
+    
+    .submitBtn {
+        width: 195px;
+        height: 45px; 
+        border-radius: 8px;
+        background: #A06EF2; 
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 400; 
+        color: #FFFFFE;
+        cursor: pointer;
+    }
+
+    @keyframes zoom {
+        0% { transform: scale(0) }
+        100% { transform: scale(${scaleFactor}) }
+      }
+
+    @keyframes zoomDesktop {
+        0% { transform: scale(0) }
+        100% { transform: scale(1) }
+    }
+    @keyframes shrink {
+        0% { transform: scale(${scaleFactor}) }
+        100% { transform: scale(0) }
+    }
+
+    @keyframes shrinkDesktop {
+        0% { transform: scale(1) }
+        100% { transform: scale(0) }
+    }
+
+    @media only screen and (max-device-width: 480px){
+        .popup-container {
+            max-width: 340px;
+            transform: scale(${scaleFactor});
+        }
+        .zoomIn {
+            animation: zoom 1s;
+        }
+
+        .zoomOut {
+            animation: shrink 1s;
+            transform: scale(0);
+        }
+    }
+    </style>
+
+    <div class = "background" onclick = "preventDefaultBehaviour(event)">
+        <div id = "popup" class = "popup-container zoomIn">
+        <div class = "card">
+            <div class = "card-title">
+                WELCOME TO THE OFFERS CARNIVAL BY MARS
+            </div>
+            <div class = "card-body">
+                <div class = "card-header">
+                    How about a quick game?
+                </div>
+                <div class = "card-text">
+                    <ol class = "bullet-pts">
+                        <li>Click on the falling goodies to catch them.</li>
+                        <li>Avoid missing any, as it will result in game over.</li>
+                    </ol>
+                </div>
+                <div class = "card-footer">
+                    GOOD LUCK, AND HAPPY CATCHING!
+                </div>
+            </div>
+            <button class = "submitBtn" onclick = "closeInstructionsPopup()">
+                Proceed
+            </button>
+        </div>
+        </div>
+    </div>
+    `;
+
+const parent = document.createElement('div');
+parent.setAttribute("id", "instructions");
+parent.innerHTML = htmlContent;
+document.body.appendChild(parent);
+
+}
+
+function closeInstructionsPopup() {
+    const instructionsPopup = document.getElementById("instructions");
+    const popup = document.getElementById("popup");
+    popup.classList.remove("zoomIn");
+    popup.classList.add("zoomOut");
+    console.log("zoomOut Added");
+    setTimeout(() => {
+        instructionsPopup.remove();
+    }, 1000);
+
+}
+
+function preventDefaultBehaviour(event) {
+    event.preventDefault();
+    event.stopPropagation();
 }
