@@ -29,9 +29,40 @@ async function submitPhoneForRewards(score) {
     } catch (error) {
         console.log(error);
     } finally {
+        //Change content for end-popup-container
+        const endPopup = document.getElementById('end-popup-card');
+        const htmlContent = `
+        <style>
+            .acknowledgement-card {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                
+            }
+            
+            .card-title {
+                text-align: center;
+            }
+            
+        </style>
+        <div class = "acknowledgement-card">
+            <div class = "gif-container">
+                <dotlottie-player src="https://lottie.host/d778cbb4-5693-4e1e-99fa-acc352205f24/Mizcdbzqya.json" background="transparent" speed="1" style="width: 200px; height: 200px;" autoplay></dotlottie-player>
+            </div>
+            <div class = "card-title">
+                You're registered successfully!!
+            </div>
+        </div>
+        `;
+        endPopup.innerHTML = htmlContent;
+
         //Redirect to appropriate store
-        const store = BRAND === "saturn" ? "https://saturn.health" : "https://ghc.health"
-        location.replace(store);
+        const store = BRAND === "saturn" ? "https://saturn.health" : "https://ghc.health";
+        setTimeout(()=>{
+            location.replace(store);
+        }, 5000);
+        
         //document.getElementById("submit").disabled = false;
     }
 }
@@ -143,7 +174,7 @@ async function triggerEndGamePopup(score) {
         100% { transform: scale(${scaleFactor}) }
       }
 
-    @keyframes zoomDesktop {
+    @keyframes zoomDesktop { 
         0% { transform: scale(0) }
         100% { transform: scale(1) }
     }
@@ -164,7 +195,7 @@ async function triggerEndGamePopup(score) {
 
 <div class = "background">
     <div class = "popup-container">
-        <div class = "popup-card">
+        <div id = "end-popup-card" class = "popup-card">
             <div class = "card-title">
                 Oops! It's Game Over
             </div>
@@ -193,7 +224,7 @@ parent.innerHTML = htmlContent;
 document.body.appendChild(parent);
 }
 
-function triggerStartGamePopup() {
+function triggerStartGamePopup(brand) {
     let actualWidth = window.innerWidth;
     let resolutionWidth = screen.width;
     let scaleFactor = actualWidth/resolutionWidth;
@@ -322,7 +353,7 @@ function triggerStartGamePopup() {
         <div id = "popup" class = "popup-container zoomIn">
         <div class = "card">
             <div class = "card-title">
-                WELCOME TO THE OFFERS CARNIVAL BY MARS
+                WELCOME TO THE OFFERS CARNIVAL BY ${brand.toUpperCase()}
             </div>
             <div class = "card-body">
                 <div class = "card-header">
