@@ -38,6 +38,7 @@ async function submitPhoneForRewards(score) {
                 flex-direction: column;
                 align-items: center;
                 justify-content: center;
+                padding: 12px;
                 
             }
             
@@ -51,7 +52,7 @@ async function submitPhoneForRewards(score) {
                 <dotlottie-player src="https://lottie.host/d778cbb4-5693-4e1e-99fa-acc352205f24/Mizcdbzqya.json" background="transparent" speed="1" style="width: 200px; height: 200px;" autoplay></dotlottie-player>
             </div>
             <div class = "card-title">
-                You're registered successfully!!
+                Response Received!!
             </div>
         </div>
         `;
@@ -111,6 +112,7 @@ async function triggerEndGamePopup(score) {
         flex-direction: column;
         align-items: center;
         justify-content: center;
+        overflow-y: hidden;
         
     }
     .popup-container {
@@ -193,7 +195,7 @@ async function triggerEndGamePopup(score) {
     
 </script>
 
-<div class = "background">
+<div class = "background" onscroll = "preventDefaultBehaviour(event)">
     <div class = "popup-container">
         <div id = "end-popup-card" class = "popup-card">
             <div class = "card-title">
@@ -242,6 +244,7 @@ function triggerStartGamePopup(brand) {
         flex-direction: column;
         align-items: center;
         justify-content: center;
+        overflow-y: hidden;
         
     }
     .popup-container {
@@ -276,7 +279,6 @@ function triggerStartGamePopup(brand) {
     }
     
     .card-body {
-        margin-top: 35px;
     }
     
     .card-header {
@@ -291,7 +293,8 @@ function triggerStartGamePopup(brand) {
         font-style: normal;
         font-weight: 400; 
         line-height: 25.81px;
-        padding-right: 30px;
+        padding-left: 8px;
+        padding-right: 8px;
     }
     
     .card-footer {
@@ -349,19 +352,19 @@ function triggerStartGamePopup(brand) {
     }
     </style>
 
-    <div class = "background" onclick = "preventDefaultBehaviour(event)">
+    <div class = "background" onscroll = "preventDefaultBehaviour(event)">
         <div id = "popup" class = "popup-container zoomIn">
         <div class = "card">
             <div class = "card-title">
                 WELCOME TO THE OFFERS CARNIVAL BY ${brand.toUpperCase()}
             </div>
             <div class = "card-body">
-                <div class = "card-header">
+                <!--<div class = "card-header">
                     How about a quick game?
-                </div>
+                </div>-->
                 <div class = "card-text">
                     <ol class = "bullet-pts">
-                        <li>Click on the falling goodies to catch them.</li>
+                        <li>Tap on the falling goodies to grab them.</li>
                         <li>Avoid missing any, as it will result in game over.</li>
                     </ol>
                 </div>
